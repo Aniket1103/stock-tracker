@@ -28,7 +28,23 @@ app.enable('trust proxy');
 
 app.post('/api/fetchStockData', (req, res) => {
     // YOUR CODE GOES HERE, PLEASE DO NOT EDIT ANYTHING OUTSIDE THIS FUNCTION
-    res.sendStatus(200);
+    axios.get("https://api.polygon.io/v2/aggs/ticker/AAPL/range/5/day/2023-01-09/2023-01-09?adjusted=true&sort=asc&limit=120&apiKey=MEu8Ti20ywkRNwGLpVuaiRRAmz3YwggX")
+    .then(response => {
+        // console.log(response);
+        if(!response || !response.data || !response.data.results || !Array.isArray(response.data.results) || !response.data.results.length) {
+            return res.status(500).json({error : "No Response from Server"});
+        }
+
+        const {o, h, l, c, v} = response.data.results[0];
+
+        const requiredData = {o, h, l, c, v};
+
+        return res.status(200).json(requiredData);
+    })
+    .catch(error => {
+        console.log(error);
+        return res.status(500).json({error : error})
+    })
 });
 
 const port = process.env.PORT || 5000;
