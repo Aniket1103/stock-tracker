@@ -1,0 +1,96 @@
+/* Global styles (optional) */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Container for the form */
+  .form-container {
+    width: 100%;
+    max-width: 50rem;
+    margin: 2rem auto;
+    padding: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Container for form inputs and labels */
+  .input-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-bottom: 1rem;
+  }
+  
+  /* Styles for form labels */
+  .input-container label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Styles for form inputs */
+  .input-container input[type="text"],
+  .input-container input[type="date"] {
+    width: 100%;
+    min-width: 10rem;
+    padding: 0.5rem;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: .5rem;
+  }
+  
+  /* Styles for the submit button */
+  .form-container button {
+    width: 20%;
+    min-width: 6rem;
+    height: 3rem;
+    padding: 1rem;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .form-container button:hover {
+    background-color: #0056b3;
+  }
+
+  .form-container button:active {
+    background-color: #003d80;
+  }
+  
+  /* Styling for the stock table */
+.stock-table {
+    width: 100%;
+    max-width: 400px;
+    margin: 2rem auto;
+    border-collapse: collapse;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .stock-table th,
+  .stock-table td {
+    padding: 0.75rem 1rem;
+    border: 1px solid #ccc;
+    text-align: left;
+  }
+  
+  .stock-table th {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
