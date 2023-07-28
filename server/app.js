@@ -26,25 +26,39 @@ app.use(bodyParser.json());
 
 app.enable('trust proxy');
 
-app.post('/api/fetchStockData', (req, res) => {
+app.post('/api/fetchStockData', async (req, res) => {
     // YOUR CODE GOES HERE, PLEASE DO NOT EDIT ANYTHING OUTSIDE THIS FUNCTION
-    axios.get("https://api.polygon.io/v2/aggs/ticker/AAPL/range/5/day/2023-01-09/2023-01-09?adjusted=true&sort=asc&limit=120&apiKey=MEu8Ti20ywkRNwGLpVuaiRRAmz3YwggX")
-    .then(response => {
-        // console.log(response);
-        if(!response || !response.data || !response.data.results || !Array.isArray(response.data.results) || !response.data.results.length) {
-            return res.status(500).json({error : "No Response from Server"});
+    try {
+        const { ticker, date } = req.body;
+
+        // Input Validation
+        if (!ticker || !date || typeof ticker !== 'string' || typeof date !== 'string') {
+        return res.status(400).json({ error: 'Invalid request. Please provide valid ticker and date.' });
         }
 
-        const {o, h, l, c, v} = response.data.results[0];
+        const url = `https://api.polygon.io/v2/aggs/ticker/${ticker.toUpperCase()}/range/5/day/${date}/${date}?adjusted=true&sort=asc&limit=120&apiKey=${process.env.API_KEY}`;
 
-        const requiredData = {o, h, l, c, v};
+        const response = await axios.get(url);
+
+        const { data } = response;
+
+        // Response Validation
+        if (!data || !data.results || !Array.isArray(data.results) || data.results.length === 0) {
+        return res.status(500).json({ error: 'No response data from server.' });
+        }
+
+        const { o, h, l, c, v } = data.results[0];
+
+        const requiredData = {
+            ticker: ticker.toUpperCase(),
+            results: { o, h, l, c, v },
+        };
 
         return res.status(200).json(requiredData);
-    })
-    .catch(error => {
-        console.log(error);
-        return res.status(500).json({error : error})
-    })
+        
+  } catch (error) {
+        return res.status(500).json({ error: 'An error occurred while fetching stock data.' });
+  }
 });
 
 const port = process.env.PORT || 5000;
